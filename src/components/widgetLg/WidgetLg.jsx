@@ -1,36 +1,44 @@
 import React from 'react'
+import '../../css/components/widgetLg.css';
+import { transactions } from '../../datas';
 
-import '../../css/components/widgetLg.css'
 export default function WidgetLg() {
-    const Button = ({type}) =>{
-        return <Button className={'widgetLgButton' + type}>{type}</Button>
-    }
+  const StatusButton = ({ type }) => {
+    return (
+      <button className={'widgetLgButton ' + type}>
+        {type}
+      </button>
+    );
+  };
+
   return (
-    <div className='widgetLg'>
-        <h3 className="widgetLgTitle">Laster TransActions</h3>
-        <table className="widgetLgTable">
-            <tr className="widgetLgTr">
-                <th className="widgetLgTh">Customer</th>
-                <th className="widgetLgTh">Date</th>
-                <th className="widgetLgTh">Amout</th>
-                <th className="widgetLgTh">Status</th>
-            </tr>
-            <tr className="widgetLgTr">
+    <div className="widgetLg">
+      <h3 className="widgetLgTitle">Latest Transactions</h3>
+      <table className="widgetLgTable">
+        <thead>
+          <tr className="widgetLgTr">
+            <th className="widgetLgTh">Customer</th>
+            <th className="widgetLgTh">Date</th>
+            <th className="widgetLgTh">Amount</th>
+            <th className="widgetLgTh">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {transactions.map((transaction)=> (
+                <tr key={transaction.id} className="widgetLgTr">
                 <td className="widgetLgUser">
-                    <img src="./images/Blacker.jpg" alt="" />
-                    <span className="widgetLgName">Carl Jahnson</span>
+                  <img src={transaction.img} className="widgetLgImg" />
+                  <span className="widgetLgName">{transaction.customer}</span>
                 </td>
-                <td className="widgetLgData">
-                    2 may 1941
-                </td>
-                <td className="widgetLgAmount">
-                    1939.9
-                </td>
+                <td className="widgetLgData">{transaction.date}</td>
+                <td className="widgetLgAmount">{transaction.amount}</td>
                 <td className="widgetLgStatus">
-                    <Button type="Approved"/>
+                  <StatusButton type={transaction.status} />
                 </td>
-            </tr>
-        </table>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
-  )
+  );
 }

@@ -28,7 +28,7 @@ export default function TopBar() {
           <div className="topbarIconContainer">
             <IoMdSettings />
           </div>
-          <img src="./images/blank-avatar-1-450x450.png" className='topAvatar' />
+          <img src="/images/blank-avatar-1-450x450.png" className='topAvatar' />
         </div>
       </div>
     </div>

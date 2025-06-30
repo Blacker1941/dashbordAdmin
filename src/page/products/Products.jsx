@@ -1,11 +1,74 @@
-import React from 'react'
+import React ,{useState} from 'react'
 
-import '../../css/page/Products.css'
+import '../../css/page/products.css'
 
-export default function Products() {
+import { products } from '../../datas';
+import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
+import { MdDeleteOutline } from "react-icons/md";
+
+export default function UserLIst() {
+
+  const [productsData, setProductsData] = useState(products)
+
+  const productDelete = productID  => {
+    setProductsData(productsData.filter(product => product.id != productID))
+  }
+
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 90
+    },
+    {
+      field: 'title',
+      headerName: 'Name',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <Link to={`/product/${params.row.id}`}  className="link">
+            <div className='userListUser'>
+              <img src={params.row.avatar} className="userListImg" />
+              {params.row.title}
+            </div>
+          </Link>
+        )
+      }
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      width: 120
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={`/product/${params.row.id}`} className="link">
+              <button className='userListEdit'>Edit</button>
+            </Link>
+            <MdDeleteOutline
+              className="userListDelete"
+              onClick={() => productDelete(params.row.id)}
+            />
+          </>
+        )
+      }
+    }
+  ]
+
   return (
-    <div>
-      products
+    <div className='userList'>
+      <DataGrid
+        rows={productsData}
+        columns={columns}
+        disableSelectionOnClick
+        checkboxSelection
+      />
     </div>
-  )
+  );
 }
